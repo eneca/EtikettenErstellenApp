@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name" translatable="false">Etiketten Daten</string>
+    <string name="add_product" translatable="false">Produkt hinzufügen</string>
+    <string name="product_string" translatable="false">Products</string>
+    <string name="product_finder" translatable="false">Product finder</string>
+    <string name="product_name_edit_text" translatable="false">Produkt Name</string>
+    <string name="product_price_edit_text" translatable="false">Produkt Preis</string>
+    <string name="product_pfand_edit_text" translatable="false">Pfand</string>
+    <string name="product_bcode_edit_text" translatable="false">Produkt Barcode</string>
+    <string name="done_button_text" translatable="false">Fertig</string>
+    <string name="fab_content_description" translatable="false">fab</string>
+    <string name="remove_this_product" translatable="false">Produkt entfernen</string>
+
+    <string name="product1_name" translatable="false">Reis 5kg</string>
+    <string name="product1_price" translatable="false">1,99€</string>
+    <string name="product1_pfand" translatable="false">0</string>
+    <string name="product1_bcode" translatable="false">0123456789012</string>
+
+
+    <string name="action_settings" translatable="false">Drucken</string>
+    <string name="bcode_scan_button_text" translatable="false">Barcode Scannen</string>
+
+
+</resources>
