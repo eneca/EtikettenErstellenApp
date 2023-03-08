@@ -24,6 +24,11 @@ class ProductsListViewModel(val dataSource: DataSource) : ViewModel() {
 
         dataSource.addProduct(newProduct)
     }
+
+    /* Delete list in datasource */
+    fun deleteList() {
+        dataSource.deleteList()
+    }
 }
 
 class ProductsListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {

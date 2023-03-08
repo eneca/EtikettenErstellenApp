@@ -21,7 +21,7 @@ class DataSource(resources: Resources) {
         }
     }
     /* Edits existing product from liveData and posts value. */
-    fun editProduct(product: Product){
+    fun editProduct(product: Product) {
         val currentList = productsLiveData.value
         if (currentList != null) {
             val updatedList = currentList.toMutableList()
@@ -52,6 +52,10 @@ class DataSource(resources: Resources) {
 
     fun getProductList(): LiveData<List<Product>> {
         return productsLiveData
+    }
+
+    fun deleteList() {
+        productsLiveData.postValue(null)
     }
 
     companion object {

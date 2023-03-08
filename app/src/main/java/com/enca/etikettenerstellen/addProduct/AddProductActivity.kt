@@ -49,7 +49,7 @@ class AddProductActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
 
-        /* Inserts flower into viewModel. */
+        /* Inserts product into viewModel. */
         if (requestCode == request_Code && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
                 addProductBcode.setText(data.getStringExtra("Bcode"))
@@ -83,10 +83,12 @@ class AddProductActivity : AppCompatActivity() {
             val price = addProductPrice.text.toString().replace('.',',').let{it+'€'}
             val pfand = calcPfand(addProductPfand.text.toString()).replace('.',',')
             val bcode = addProductBcode.text.toString()
+
+            resultIntent.putExtra(PRODUCT_BCODE, bcode)
             resultIntent.putExtra(PRODUCT_NAME, name)
             resultIntent.putExtra(PRODUCT_PRICE, price)
             resultIntent.putExtra(PRODUCT_PFAND, pfand)
-            resultIntent.putExtra(PRODUCT_BCODE, bcode)
+
             setResult(Activity.RESULT_OK, resultIntent)
         }
         finish()

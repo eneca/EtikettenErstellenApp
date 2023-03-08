@@ -54,7 +54,7 @@ class ProductDetailActivity : AppCompatActivity() {
                     if(productName.text.isNullOrEmpty() || productPrice.text.isNullOrEmpty()|| productBcode.text.isNullOrEmpty()){
                         finish()
                     }
-                    val p= Product(productName.text.toString(), productPrice.text.toString(),productPfand.text.toString() ,productBcode.text.toString())
+                    val p = Product(productBcode.text.toString(), productName.text.toString(), productPrice.text.toString(),productPfand.text.toString())
                     productDetailViewModel.editProduct(p)
                 }
                 finish()

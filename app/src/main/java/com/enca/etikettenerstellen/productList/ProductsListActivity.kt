@@ -12,16 +12,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.enca.etikettenerstellen.R
 import com.enca.etikettenerstellen.data.Product
 import com.enca.etikettenerstellen.productDetail.ProductDetailActivity
 import com.enca.etikettenerstellen.addProduct.*
-import com.enca.etikettenerstellen.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
 import java.io.*
@@ -76,6 +75,30 @@ class ProductsListActivity : AppCompatActivity(),ActivityCompat.OnRequestPermiss
         writeCsv(productsListViewModel.productsLiveData.value!!)
         return
     }
+    /* Click event to delete all elements in list */
+    private fun deleteButtonOnClick(){
+        if(productsListViewModel.productsLiveData.value.isNullOrEmpty()){
+            Snackbar.make(getWindow().getDecorView().getRootView(),"Liste bereits gelöscht!",Snackbar.LENGTH_SHORT).show()
+            return
+        }
+
+        val deleteDialog = AlertDialog.Builder(this)
+        deleteDialog.setTitle("Liste Löschen")
+        deleteDialog.setMessage("Bei Bestätigung wird die Liste in der App gelöscht")
+
+        deleteDialog.setPositiveButton(android.R.string.yes) { dialog, which ->
+            Snackbar.make(getWindow().getDecorView().getRootView(),"Löscht Liste!",Snackbar.LENGTH_SHORT).show()
+            deleteList()
+        }
+
+        deleteDialog.setNegativeButton(android.R.string.no) { dialog, which ->
+            Snackbar.make(getWindow().getDecorView().getRootView(),"Liste nicht gelöscht!",Snackbar.LENGTH_SHORT).show()
+        }
+        deleteDialog.show()
+
+        return
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -84,8 +107,12 @@ class ProductsListActivity : AppCompatActivity(),ActivityCompat.OnRequestPermiss
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
+            R.id.action_settings_print -> {
                 printButtonOnClick()
+                true
+            }
+            R.id.action_settings_delete -> {
+                deleteButtonOnClick()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -104,7 +131,7 @@ class ProductsListActivity : AppCompatActivity(),ActivityCompat.OnRequestPermiss
                 val productPfand = data.getStringExtra(PRODUCT_PFAND)
                 val productBcode = data.getStringExtra(PRODUCT_BCODE)
 
-                productsListViewModel.insertProduct(productName, productPrice,productPfand,productBcode)
+                productsListViewModel.insertProduct(productBcode, productName, productPrice,productPfand)
             }
         }
     }
@@ -116,14 +143,18 @@ class ProductsListActivity : AppCompatActivity(),ActivityCompat.OnRequestPermiss
         root = File(root, "Produkt_Liste.txt")
 
         val writer = BufferedWriter(FileWriter(root))
-        writer.write("Name; Preis; Pfand; Barcode")
+        writer.write("Barcode; Name; Preis; Pfand")
         writer.newLine()
         productList.forEach {
-            writer.write("${it.name};${it.price};${it.pfand};${it.bcode}")
+            writer.write("${it.bcode};${it.name};${it.price};${it.pfand}")
             writer.newLine()
         }
         writer.flush()
 
+    }
+    /******     Delete List    *******/
+    fun deleteList(){
+        productsListViewModel.deleteList()
     }
 
     /******     Permissions     *******/

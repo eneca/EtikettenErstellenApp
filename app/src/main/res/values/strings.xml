@@ -17,7 +17,8 @@
     <string name="product1_bcode" translatable="false">0123456789012</string>
 
 
-    <string name="action_settings" translatable="false">Drucken</string>
+    <string name="menu_print" translatable="false">Drucken</string>
+    <string name="menu_delete" translatable="false">Alle Löschen</string>
     <string name="bcode_scan_button_text" translatable="false">Barcode Scannen</string>
 
 

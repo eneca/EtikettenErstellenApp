@@ -2,8 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_settings_print"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/menu_print"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings_delete"
+        android:orderInCategory="100"
+        android:title="@string/menu_delete"
         app:showAsAction="never" />
 </menu>
