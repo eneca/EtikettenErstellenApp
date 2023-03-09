@@ -67,14 +67,36 @@ class ProductsListActivity : AppCompatActivity(),ActivityCompat.OnRequestPermiss
         val intent = Intent(this, AddProductActivity::class.java)
         startActivityForResult(intent, newProductActivityRequestCode)
     }
+
+    /******     CSV    *******/
+    fun writeCsv(productList: List<Product>) {
+        var root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        root = File(root, "Produkte")
+        root.mkdir()
+        root = File(root, "Produkt_Liste.txt")
+
+        val writer = BufferedWriter(FileWriter(root))
+        writer.write("Barcode; Name; Preis; Pfand")
+        writer.newLine()
+        productList.forEach {
+            writer.write("${it.bcode};${it.name};${it.price};${it.pfand}")
+            writer.newLine()
+        }
+        writer.flush()
+    }
     /* Print a PDF from Elements in RecyclerView TODO */
     private fun printButtonOnClick(){
         if(productsListViewModel.productsLiveData.value.isNullOrEmpty())
             return
         Snackbar.make(getWindow().getDecorView().getRootView(),"Speichert Datei!",Snackbar.LENGTH_SHORT).show()
         writeCsv(productsListViewModel.productsLiveData.value!!)
-        return
     }
+
+    /******     Delete List    *******/
+    fun deleteList(){
+        productsListViewModel.deleteList()
+    }
+
     /* Click event to delete all elements in list */
     private fun deleteButtonOnClick(){
         if(productsListViewModel.productsLiveData.value.isNullOrEmpty()){
@@ -134,27 +156,6 @@ class ProductsListActivity : AppCompatActivity(),ActivityCompat.OnRequestPermiss
                 productsListViewModel.insertProduct(productBcode, productName, productPrice,productPfand)
             }
         }
-    }
-    /******     CSV    *******/
-    fun writeCsv(productList: List<Product>) {
-        var root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        root = File(root, "Produkte")
-        root.mkdir()
-        root = File(root, "Produkt_Liste.txt")
-
-        val writer = BufferedWriter(FileWriter(root))
-        writer.write("Barcode; Name; Preis; Pfand")
-        writer.newLine()
-        productList.forEach {
-            writer.write("${it.bcode};${it.name};${it.price};${it.pfand}")
-            writer.newLine()
-        }
-        writer.flush()
-
-    }
-    /******     Delete List    *******/
-    fun deleteList(){
-        productsListViewModel.deleteList()
     }
 
     /******     Permissions     *******/

@@ -64,7 +64,7 @@ class AddProductActivity : AppCompatActivity() {
     private fun setName(text: TextInputEditText){
         text.setText("")
     }
-
+    /* For newer android devices you can use gms services and don't need an extra activity*/
     private fun addBcode(){
         val i = Intent(this, BcodeScanner::class.java)
         startActivityForResult(i,request_Code)
